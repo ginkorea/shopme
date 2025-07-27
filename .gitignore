@@ -1,0 +1,6 @@
+*.npy
+*.pt
+*.ckpt
+backend/emotic/data/
+__pycache__/
+*.pyc
