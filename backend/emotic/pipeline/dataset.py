@@ -40,8 +40,13 @@ class EmoticDataset(Dataset):
         img_path = os.path.join(self.data_root, 'img_arrs', npy_filename)
         image = np.load(img_path)
 
+        # Convert HWC to CHW if needed
+        if image.ndim == 3 and image.shape[-1] == 3:
+            image = image.transpose(2, 0, 1)  # (H, W, C) → (C, H, W)
+
         # Convert to torch tensor
-        image = torch.from_numpy(image).float()  # Assuming HWC RGB format
+        image = torch.from_numpy(image).float()
+
         if self.transform:
             image = self.transform(image)
 
@@ -54,3 +59,4 @@ class EmoticDataset(Dataset):
             'emotions': emotions,
             'vad': vad
         }
+

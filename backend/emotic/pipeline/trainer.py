@@ -75,6 +75,11 @@ class Trainer:
         print(f"Epoch {epoch} | Val Loss: {avg_loss:.4f}")
 
     def save_checkpoint(self, epoch):
-        path = os.path.join(self.save_dir, f"emotic_epoch{epoch}.pt")
-        self.model.save(path, self.optimizer, epoch)
+        path = os.path.join(self.save_dir, f"checkpoint_epoch{epoch}.pth")
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.optimizer.state_dict()
+        }, path)
         print(f"✅ Checkpoint saved: {path}")
+
